@@ -1,0 +1,42 @@
+@import '../../styles/index.scss';
+
+nav {
+  border-bottom: $border;
+  padding: 10px 70px;
+  background-color: #ffffff;
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    block-size: 70px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    img {
+      inline-size: 60px;
+    }
+    li {
+      display: flex;
+      align-items: center;
+
+      a {
+        text-decoration: none;
+        font-weight: bold;
+        color: inherit;
+        &:hover,
+        &:focus-visible {
+          color: $text-500;
+        }
+      }
+    }
+    div {
+      display: flex;
+      gap: 10px;
+
+      a {
+        padding: 5px;
+      }
+    }
+  }
+}
