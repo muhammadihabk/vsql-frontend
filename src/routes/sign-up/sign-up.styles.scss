@@ -1,15 +1,18 @@
 @import '../../styles/index.scss';
 
 .form-wrapper {
-  margin-block-start: 150px;
+  margin-block-start: 7rem;
 
   h1 {
     text-align: center;
+    font-size: $size-text-500;
   }
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: $gap;
+
+  margin-block-start: 1rem;
 }

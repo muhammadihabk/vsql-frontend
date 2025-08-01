@@ -1,5 +1,25 @@
+@import './index.scss';
+
 .page-wrapper {
   margin: 0 auto;
-  margin-block-start: 50px;
-  inline-size: 1000px;
+  margin-block-start: 3rem;
+  max-inline-size: 62rem;
+}
+
+.cta-primary {
+  background-color: $primary;
+  color: #ffffff;
+}
+
+.cta-secondary {
+  background-color: $secondary;
+  color: $primary;
+}
+
+.cta-primary:hover {
+  background-color: $primary-dark;
+}
+
+.cta-secondary:hover {
+  background-color: $secondary-dark;
 }

@@ -1,10 +1,11 @@
 import './button.styles.scss';
 
 const Button = (props) => {
-  const { inType, text, classes } = props;
+  const { inType, text, ctaType } = props;
+  const ctaClass = ctaType === 'secondary' ? 'cta-secondary' : 'cta-primary';
 
   return (
-    <button className={`basic-button ${classes?.join(' ')}`} type={inType}>
+    <button className={`button ${ctaClass}`} type={inType}>
       {text}
     </button>
   );

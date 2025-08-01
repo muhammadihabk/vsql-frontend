@@ -2,41 +2,42 @@
 
 nav {
   border-bottom: $border;
-  padding: 10px 70px;
-  background-color: #ffffff;
+  padding: 0.5rem 2rem;
+  background-color: transparent;
+  font-size: $size-text-200;
 
   ul {
     display: flex;
     justify-content: space-between;
-    block-size: 70px;
     list-style-type: none;
     margin: 0;
     padding: 0;
 
-    img {
-      inline-size: 60px;
-    }
     li {
       display: flex;
       align-items: center;
 
       a {
         text-decoration: none;
-        font-weight: bold;
         color: inherit;
-        &:hover,
-        &:focus-visible {
-          color: $text-500;
+
+        svg {
+          vertical-align: middle;
+        }
+        span {
+          border-radius: 0.25rem;
+          padding: 0.25rem 0.5rem;
+
+          &:hover,
+          &:focus-visible {
+            background-color: $color-bg-300;
+          }
         }
       }
     }
     div {
       display: flex;
-      gap: 10px;
-
-      a {
-        padding: 5px;
-      }
+      gap: 0.5rem;
     }
   }
 }

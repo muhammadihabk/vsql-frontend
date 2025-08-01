@@ -1,20 +1,14 @@
 @import '../../styles/index.scss';
 
-.basic-button {
-  margin: 10px 2px;
-  border: none;
-  border-radius: 7px;
-  padding: 10px 16px;
+.button {
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  border: $border;
+  border-radius: 0.5rem;
   inline-size: 150px;
-  background-color: $primary;
-  color: $text-100;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: inherit;
   font-weight: bold;
   align-self: center;
   cursor: pointer;
-}
-
-.basic-button:hover {
-  background-color: $primary-fade;
 }

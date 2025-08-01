@@ -6,7 +6,7 @@ $spinner-animation: spin 0.5s linear infinite;
   display: inline-block;
   inline-size: 50px;
   block-size: 50px;
-  border: 2px solid $text-500;
+  border: 2px solid $color-text-400;
   border-radius: 50%;
   border-top-color: #000;
   animation: $spinner-animation;

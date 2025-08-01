@@ -60,7 +60,9 @@ function Login() {
           required
           onChange={handleOnChange}
         />
-        <Button inType="submit" text="Login" />
+        <div style={{ display: 'flex', margin: '0 auto' }}>
+          <Button inType="submit" text="Login" />
+        </div>
       </form>
     </div>
   );
