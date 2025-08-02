@@ -1,0 +1,16 @@
+@import '../../styles/index.scss';
+
+.query-wrapper {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    textarea {
+      block-size: 20rem;
+    }
+    .btn-schema-query {
+      align-self: end;
+    }
+  }
+}

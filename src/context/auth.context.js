@@ -1,7 +1,6 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import React from 'react';
 
 const AuthContext = createContext({
   user: null,
@@ -15,11 +14,13 @@ function useAuth() {
 
 function AuthProvider({ children }) {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function fetchUser() {
+      setLoading(true);
+
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_BASE_URL}/user/me`,
@@ -29,28 +30,25 @@ function AuthProvider({ children }) {
         );
         if (response.data && response.data.user) {
           setUser(response.data.user);
-          setIsLoggedIn(true);
         } else {
           setUser(null);
-          setIsLoggedIn(false);
         }
       } catch (error) {
         setUser(null);
-        setIsLoggedIn(false);
+      } finally {
+        setLoading(false);
       }
     }
     fetchUser();
   }, []);
 
   async function login(user) {
-    setIsLoggedIn(true);
     setUser(user);
-    navigate('/');
+    navigate('/build');
   }
 
   async function logout() {
     await axios.post(`${process.env.REACT_APP_AUTH_BASE_URL}/auth/logout`);
-    setIsLoggedIn(false);
     setUser(null);
     navigate('/login');
   }
@@ -59,7 +57,7 @@ function AuthProvider({ children }) {
     login,
     logout,
     user,
-    isLoggedIn,
+    loading,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

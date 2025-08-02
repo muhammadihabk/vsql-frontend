@@ -1,0 +1,38 @@
+@import '../../styles/index.scss';
+
+.tables-wrapper {
+  ul {
+    max-block-size: 10rem;
+    overflow-y: auto;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      padding: 0.5rem 0.25rem;
+      cursor: pointer;
+      user-select: none;
+
+      &::before {
+        content: '';
+        inline-size: 1rem;
+        block-size: 0.5rem;
+        border-block: 0.2rem solid transparent;
+        border-radius: 0.05rem;
+      }
+      &:hover::before {
+        border-color: $color-line-500;
+      }
+
+      span {
+        padding: 0.1rem 0.2rem;
+        border-radius: 0.5rem;
+        background-color: $secondary;
+      }
+      svg {
+        vertical-align: middle;
+      }
+    }
+  }
+}

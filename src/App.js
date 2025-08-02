@@ -4,6 +4,7 @@ import LandingPage from './routes/landing-page/landing-page.component';
 import SignUp from './routes/sign-up/sign-up.component';
 import Login from './routes/login/login.component';
 import PrivateRoute from './routes/private-route/private-route.component';
+import Build from './routes/build/build.component';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="auth/login" element={<Login />} />
 
         <Route element={<PrivateRoute />}>
+          <Route path="build" element={<Build />} />
         </Route>
       </Route>
     </Routes>

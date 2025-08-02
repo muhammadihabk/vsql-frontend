@@ -34,6 +34,12 @@ nav {
           }
         }
       }
+
+      .profile-pic {
+        inline-size: 3rem;
+        block-size: 3rem;
+        border-radius: 50%;
+      }
     }
     div {
       display: flex;
