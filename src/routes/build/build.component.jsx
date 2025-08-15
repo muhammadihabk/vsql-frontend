@@ -1,4 +1,10 @@
-import { DndContext, DragOverlay } from '@dnd-kit/core';
+import {
+  DndContext,
+  DragOverlay,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 import BuilderCanvas from '../../components/BuilderCanvas/builder-canvas.component';
 import DBTables from '../../components/DBTables/db-tables.component';
 import QueryResult from '../../components/QueryResult/query-result.component';
@@ -41,11 +47,14 @@ function Build() {
     }
   };
 
+  const sensors = useSensors(useSensor(PointerSensor));
+
   return (
     <DndContext
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       autoScroll={false}
+      sensors={sensors}
     >
       <main className="page-wrapper">
         <section className="schema-panel" aria-labelledby="schema-title">

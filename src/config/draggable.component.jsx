@@ -20,6 +20,7 @@ function SortableItem(props) {
     opacity: isDragging ? 0 : 1,
     transition,
     cursor: 'grab',
+    touchAction: 'none',
   };
 
   return (
