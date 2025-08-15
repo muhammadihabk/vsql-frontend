@@ -1,18 +1,22 @@
 @import '../../styles/index.scss';
 
 .tables-wrapper {
-  ul {
-    max-block-size: 10rem;
-    overflow-y: auto;
+  margin-inline: auto;
+  max-block-size: 10rem;
+  inline-size: 18rem;
+  border: $border;
+  border-radius: $border-radius-300;
+  overflow-x: hidden;
+  overflow-y: auto;
 
+
+  ul {
     li {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-
-      padding: 0.5rem 0.25rem;
-      cursor: pointer;
-      user-select: none;
+      padding-block: 0.5rem;
+      padding-inline-start: 1rem;
 
       &::before {
         content: '';
@@ -23,6 +27,9 @@
       }
       &:hover::before {
         border-color: $color-line-500;
+      }
+      &:hover {
+        background-color: $color-bg-300;
       }
 
       span {

@@ -23,7 +23,7 @@ $size-text-500: 1.5rem;
 $color-line-500: $color-bg-500;
 
 $border: 1px solid $color-line-500;
-$boxes-border-radius: 1rem;
+$border-radius-300: 7px;
 $padding: 1rem;
 
 $gap: 1rem;
@@ -93,7 +93,7 @@ textarea {
   inline-size: 18rem;
   block-size: 2.5rem;
   border: $border;
-  border-radius: 7px;
+  border-radius: $border-radius-300;
   padding: 0.5rem 1rem;
   background-color: transparent;
   color: $color-text-400;
@@ -131,7 +131,3 @@ textarea {
 table {
   font: inherit;
 }
-
-// * {
-//   border: 1px solid red;
-// }

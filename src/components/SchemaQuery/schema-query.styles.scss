@@ -5,12 +5,18 @@
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    max-inline-size: 18rem;
+    margin-inline: auto;
+    margin-block-start: 1rem;
+    padding: 0;
 
     textarea {
       block-size: 20rem;
     }
+
     .btn-schema-query {
       align-self: end;
+      margin-block-start: 1rem;
     }
   }
 }

@@ -1,7 +1,7 @@
 @import './index.scss';
 
 .page-wrapper {
-  margin: 0 auto;
+  margin-inline: auto;
   padding-inline: 1rem;
   max-inline-size: 62rem;
 }
@@ -22,4 +22,10 @@
 
 .cta-secondary:hover {
   background-color: $secondary-dark;
+}
+
+.h2- {
+  margin-block: 2rem;
+  font-size: $size-text-500;
+  text-align: center;
 }

@@ -1,14 +1,15 @@
 import './builder-canvas.styles.scss';
+import Droppable from '../../config/droppable.component';
 
-const BuilderCanvas = () => {
+const BuilderCanvas = (props) => {
+  const { tables } = props;
+
   return (
-    <div
-      className="canvas-wrapper"
-      role="region"
-      aria-label="Query builder canvas"
-    >
-      canvas
-    </div>
+    <Droppable id="droppable" className="canvas-wrapper">
+      {Object.entries(tables).map(([table, value]) => {
+        return value.isDropped && <div key={table}>{table}</div>;
+      })}
+    </Droppable>
   );
 };
 

@@ -1,32 +1,8 @@
 @import '../../styles/index.scss';
 
-$spinner-animation: spin 0.5s linear infinite;
-
-.spinner {
-  display: inline-block;
-  inline-size: 50px;
-  block-size: 50px;
-  border: 2px solid $color-text-400;
-  border-radius: 50%;
-  border-top-color: #000;
-  animation: $spinner-animation;
-  -webkit-animation: $spinner-animation;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes spin {
-  to {
-    -webkit-transform: rotate(360deg);
-  }
-}
-
-.spinner-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.canvas-wrapper {
+  border: $border;
+  border-radius: $border-radius-300;
+  min-inline-size: 5rem;
+  min-block-size: 8rem;
 }
