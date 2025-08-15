@@ -2,6 +2,7 @@ import {
   DndContext,
   DragOverlay,
   PointerSensor,
+  pointerWithin,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -55,8 +56,9 @@ function Build() {
       onDragEnd={handleDragEnd}
       autoScroll={false}
       sensors={sensors}
+      collisionDetection={pointerWithin}
     >
-      <main className="page-wrapper">
+      <main className="build-wrapper">
         <section className="schema-panel" aria-labelledby="schema-title">
           <h2 id="schema-title" className="h2-">
             Database Schema

@@ -1,0 +1,21 @@
+@import '../styles/index.scss';
+
+.droppable {
+  border: 2px dashed $color-bg-500;
+  border-radius: $border-radius-300;
+  max-inline-size: 18rem;
+
+  block-size: 14rem;
+  margin-inline: auto;
+
+  &-is-dragging {
+    border-color: $accent;
+    background-color: $color-bg-200;
+  }
+}
+
+@media (min-width: 768px) {
+  .droppable {
+    max-inline-size: 90%;
+  }
+}

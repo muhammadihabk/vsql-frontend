@@ -1,22 +1,15 @@
 import { useDroppable } from '@dnd-kit/core';
+import './droppable.styles.scss';
 
 function Droppable(props) {
   const { id } = props;
   const { isOver, setNodeRef } = useDroppable({
     id,
   });
-  const style = {
-    backgroundColor: isOver ? 'background-color: $color-bg-200' : undefined,
-
-    border: '2px dashed #acacac',
-    borderRadius: '7px',
-    maxInlineSize: '18rem',
-    blockSize: '14rem',
-    marginInline: 'auto',
-  };
+  const className = `droppable ${isOver ? 'droppable-is-dragging' : ''}`;
 
   return (
-    <div ref={setNodeRef} style={style}>
+    <div ref={setNodeRef} className={className}>
       {props.children}
     </div>
   );

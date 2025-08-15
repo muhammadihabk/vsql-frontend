@@ -1,5 +1,18 @@
 @import '../../styles/index.scss';
 
+@media (min-width: 768px) {
+  .build-wrapper {
+    display: flex;
+    block-size: 90vh;
+  }
+  .schema-panel {
+    padding-inline: 1rem;
+  }
+  .builder-panel {
+    flex-grow: 1;
+  }
+}
+
 .drag-overlay-wrapper {
   li {
     display: flex;
