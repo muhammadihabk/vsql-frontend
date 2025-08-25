@@ -1,4 +1,13 @@
 @import '../../styles/index.scss';
 
-.canvas-wrapper {
+.builder-canvas-wrapper {
+  inline-size: 40rem;
+  block-size: 40rem;
+  border: 2px dashed $color-bg-500;
+  border-radius: $border-radius-300;
+  background-color: $color-bg-300;
+
+  &-is-dragging {
+    border-color: $accent;
+  }
 }

@@ -1,92 +1,53 @@
-import {
-  DndContext,
-  DragOverlay,
-  PointerSensor,
-  pointerWithin,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
 import BuilderCanvas from '../../components/BuilderCanvas/builder-canvas.component';
-import DBTables from '../../components/DBTables/db-tables.component';
+import SchemaTables from '../../components/SchemaTables/schema-tables.component';
 import QueryResult from '../../components/QueryResult/query-result.component';
 import SchemaQuery from '../../components/SchemaQuery/schema-query.component';
 import './build.styles.scss';
 import { useState } from 'react';
-import DBTableItem from '../../components/DBTableItem/db-table-item.component';
 
 function Build() {
   const inTables = {
-    Customer: {
+    customer: {
       isDropped: false,
+      columns: ['address', 'id', 'name'],
     },
-    Order: { isDropped: false },
-    Store: { isDropped: false },
+    order_: {
+      isDropped: false,
+      columns: ['amount', 'customer_id', 'order_date', 'order_no', 'store_id'],
+      relationships: {
+        customer: ['customer_id', 'id'],
+        store: ['store_id', 'id'],
+      },
+    },
+    store: {
+      isDropped: false,
+      columns: ['city', 'id'],
+    },
   };
   const [tables, setTables] = useState(inTables);
   const tableIds = Object.keys(tables).filter(
     (table) => !tables[table].isDropped
   );
-  const [activeId, setActiveId] = useState(null);
-
-  const handleDragStart = (event) => {
-    setActiveId(event.active.id);
-  };
-
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-
-    setActiveId(null);
-    if (!over || active.id === over.id) return;
-    if (over) {
-      setTables((pastTables) => {
-        const result = {
-          ...pastTables,
-          [event.active.id]: { isDropped: true },
-        };
-        return result;
-      });
-    }
-  };
-
-  const sensors = useSensors(useSensor(PointerSensor));
 
   return (
-    <DndContext
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      autoScroll={false}
-      sensors={sensors}
-      collisionDetection={pointerWithin}
-    >
-      <main className="build-wrapper">
-        <section className="schema-panel" aria-labelledby="schema-title">
-          <h2 id="schema-title" className="h2-">
-            Database Schema
-          </h2>
-          <DBTables tables={tableIds} />
-          <SchemaQuery />
-        </section>
+    <main className="build-wrapper">
+      <section className="schema-panel" aria-labelledby="schema-title">
+        <h2 id="schema-title" className="h2-">
+          Database Schema
+        </h2>
+        <SchemaTables tables={tableIds} />
+        <SchemaQuery />
+      </section>
 
-        <DragOverlay>
-          {activeId ? (
-            <div className="drag-overlay-wrapper">
-              <ul>
-                <DBTableItem table={activeId} isDragOverlay={true} />
-              </ul>
-            </div>
-          ) : null}
-        </DragOverlay>
+      <section className="builder-panel" aria-labelledby="builder-title">
+        <h2 id="builder-title" className="h2-">
+          Query Builder
+        </h2>
 
-        <section className="builder-panel" aria-labelledby="builder-title">
-          <h2 id="builder-title" className="h2-">
-            Query Builder
-          </h2>
-
-          <BuilderCanvas tables={tables} />
-          <QueryResult />
-        </section>
-      </main>
-    </DndContext>
+        <BuilderCanvas tables={tables} />
+        <QueryResult />
+      </section>
+    </main>
   );
 }
 

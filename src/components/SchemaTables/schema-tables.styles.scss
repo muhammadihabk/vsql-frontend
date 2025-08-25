@@ -2,11 +2,10 @@
 
 .tables-wrapper {
   margin-inline: auto;
-  block-size: 10rem;
-  inline-size: 18rem;
+  max-block-size: 10rem;
+  max-inline-size: 18rem;
   border: $border;
   border-radius: $border-radius-300;
-  overflow-x: hidden;
   overflow-y: auto;
 
 
