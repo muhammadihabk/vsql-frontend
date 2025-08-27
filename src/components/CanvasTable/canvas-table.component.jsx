@@ -7,6 +7,7 @@ function CanvasTable(props) {
     bg: '#f1f5f9',
     colorText500: '#677681',
     colorText300: '#707e88',
+    cornerRadius: 8,
   };
   const tableWidth = 200;
   const headerHeight = 35;
@@ -23,7 +24,7 @@ function CanvasTable(props) {
         shadowBlur={4}
         shadowOffset={{ x, y }}
         shadowOpacity={0.2}
-        cornerRadius={8}
+        cornerRadius={styles.cornerRadius}
       />
     ),
     accentLine: (
@@ -58,7 +59,7 @@ function CanvasTable(props) {
           height={rowHeight}
           align="center"
           verticalAlign="middle"
-          fontSize={21}
+          fontSize={19}
           fill={styles.colorText500}
           fontStyle="bold"
         />
@@ -66,6 +67,21 @@ function CanvasTable(props) {
     ),
     rows: table.columns.map((column, i) => (
       <>
+        <Rect
+          x={x}
+          y={y + 7 + rowHeight * (i + 1)}
+          width={tableWidth}
+          height={rowHeight}
+          cornerRadius={styles.cornerRadius}
+          onMouseEnter={(e) => {
+            e.target.fill('#f1f5f97d');
+            e.target.getStage().container().style.cursor = 'pointer';
+          }}
+          onMouseLeave={(e) => {
+            e.target.fill('transparent');
+            e.target.getStage().container().style.cursor = 'default';
+          }}
+        />
         <Text
           x={x}
           y={y + 7 + rowHeight * (i + 1)}
@@ -75,8 +91,9 @@ function CanvasTable(props) {
           padding={21}
           align="left"
           verticalAlign="middle"
-          fontSize={14}
+          fontSize={15}
           fill={styles.colorText300}
+          listening={false}
         />
       </>
     )),
