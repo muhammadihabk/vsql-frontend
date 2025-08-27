@@ -51,9 +51,24 @@ const Canvas = (props) => {
     >
       <Stage width={dimensions.width} height={dimensions.height}>
         <Layer>
-          {Object.entries(canvasTables).map(([tableName, value]) => {
+          {Object.entries(canvasTables).map(([tableName, value], i) => {
+            const GRID_SIZE = 150;
+            const ROW_HEIGHT = 35;
+            const col = i % 3; // 3 tables per row
+            const row = Math.floor(i / 3);
+            const x = col * GRID_SIZE + 50;
+            const y = row * value.columns.length * ROW_HEIGHT + 50; // Adjust based on table height
+
             value.name = tableName;
-            return <CanvasTable key={tableName} table={value} />;
+            return (
+              <CanvasTable
+                key={tableName}
+                x={x}
+                y={y}
+                rowHeight={ROW_HEIGHT}
+                table={value}
+              />
+            );
           })}
         </Layer>
       </Stage>

@@ -1,7 +1,7 @@
 import { Group, Line, Rect, Text } from 'react-konva';
 
 function CanvasTable(props) {
-  let { table, x = 0, y = 0 } = props;
+  let { table, x = 0, y = 0, rowHeight = 35 } = props;
   const styles = {
     accent: '#6ed084',
     bg: '#f1f5f9',
@@ -11,7 +11,6 @@ function CanvasTable(props) {
   };
   const tableWidth = 200;
   const headerHeight = 35;
-  const rowHeight = 35;
   const shapes = {
     wrapper: (
       <Rect
@@ -21,8 +20,7 @@ function CanvasTable(props) {
         height={table.columns.length * rowHeight + headerHeight + 7}
         fill="#ffffff"
         shadowColor="#000000"
-        shadowBlur={4}
-        shadowOffset={{ x, y }}
+        shadowBlur={6}
         shadowOpacity={0.2}
         cornerRadius={styles.cornerRadius}
       />
@@ -49,7 +47,7 @@ function CanvasTable(props) {
         <Line
           points={[x, y + 7 + rowHeight, x + tableWidth, y + 7 + rowHeight]}
           stroke="#e0e9ef"
-          strokeWidth={1}
+          strokeWidth={2}
         />
         <Text
           x={x}
