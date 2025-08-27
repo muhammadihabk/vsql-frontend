@@ -1,7 +1,10 @@
+import { Fragment, useState } from 'react';
 import { Group, Line, Rect, Text } from 'react-konva';
 
 function CanvasTable(props) {
-  let { table, x = 0, y = 0, rowHeight = 35 } = props;
+  let { table, x = 0, y = 0, rowHeight = 35, handleRowClick } = props;
+  const [activeRowsIndexes, setActiveRowsIndexes] = useState(null);
+
   const styles = {
     accent: '#6ed084',
     bg: '#f1f5f9',
@@ -32,7 +35,7 @@ function CanvasTable(props) {
         width={tableWidth}
         height={7}
         fill={styles.accent}
-        cornerRadius={[8, 8]}
+        cornerRadius={[8, 8, 0, 0]}
       />
     ),
     header: (
@@ -64,7 +67,7 @@ function CanvasTable(props) {
       </>
     ),
     rows: table.columns.map((column, i) => (
-      <>
+      <Fragment key={column}>
         <Rect
           x={x}
           y={y + 7 + rowHeight * (i + 1)}
@@ -72,12 +75,23 @@ function CanvasTable(props) {
           height={rowHeight}
           cornerRadius={styles.cornerRadius}
           onMouseEnter={(e) => {
-            e.target.fill('#f1f5f97d');
             e.target.getStage().container().style.cursor = 'pointer';
+            if (activeRowsIndexes?.has(i)) return;
+            e.target.fill('#f1f5f97d');
           }}
           onMouseLeave={(e) => {
+            if (activeRowsIndexes?.has(i)) return;
             e.target.fill('transparent');
             e.target.getStage().container().style.cursor = 'default';
+          }}
+          onClick={(e) => {
+            const isColAdded = toggleActivateRow(i, e);
+            const options = {
+              isColAdded,
+              column,
+              tableName: table.name,
+            };
+            handleRowClick(options);
           }}
         />
         <Text
@@ -93,9 +107,36 @@ function CanvasTable(props) {
           fill={styles.colorText300}
           listening={false}
         />
-      </>
+      </Fragment>
     )),
   };
+
+  function updateActiveRowsIndexes(index) {
+    if (activeRowsIndexes) {
+      if (activeRowsIndexes.has(index)) {
+        activeRowsIndexes.delete(index);
+        return false;
+      }
+      setActiveRowsIndexes(
+        (prevState) => new Set([index, ...prevState?.values()])
+      );
+    } else {
+      setActiveRowsIndexes(new Set([index]));
+    }
+
+    return true;
+  }
+
+  function toggleActivateRow(i, e) {
+    const isUpdated = updateActiveRowsIndexes(i);
+    if (isUpdated) {
+      e.target.fill('#e2e5e87d');
+    } else {
+      e.target.fill('transparent');
+    }
+
+    return isUpdated;
+  }
 
   return (
     <Group x={x} y={y} draggable>

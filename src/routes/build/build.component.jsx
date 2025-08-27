@@ -15,8 +15,8 @@ function Build() {
       isDropped: false,
       columns: ['amount', 'customer_id', 'order_date', 'order_no', 'store_id'],
       relationships: {
-        customer: ['customer_id', 'id'],
-        store: ['store_id', 'id'],
+        customer_id: ['customer', 'id'],
+        store_id: ['store', 'id'],
       },
     },
     store: {

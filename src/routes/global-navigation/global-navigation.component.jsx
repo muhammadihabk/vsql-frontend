@@ -1,10 +1,19 @@
 import { Link, Outlet } from 'react-router-dom';
 import './global-navigation.styles.scss';
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { useAuth } from '../../context/auth.context';
+import { useLocation } from 'react-router-dom';
+import Button from '../../components/button/button.component';
+import { CanvasQueryContext } from '../../context/canvas-query.context';
 
 function GlobalNavigation() {
   const { user } = useAuth();
+  const { runQuery } = useContext(CanvasQueryContext);
+  const location = useLocation();
+
+  function handleRunQuery() {
+    runQuery();
+  }
 
   return (
     <Fragment>
@@ -29,6 +38,24 @@ function GlobalNavigation() {
                 if (user) {
                   return (
                     <Fragment>
+                      {location.pathname === '/build' && (
+                        <Button
+                          text="Run Query"
+                          ctaType="primary"
+                          onClick={handleRunQuery}
+                          icon={
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="24px"
+                              viewBox="0 -960 960 960"
+                              width="24px"
+                              fill="#ffffff"
+                            >
+                              <path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z" />
+                            </svg>
+                          }
+                        />
+                      )}
                       <li>
                         <Link to="/me">
                           <img

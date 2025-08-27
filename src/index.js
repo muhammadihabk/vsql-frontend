@@ -6,13 +6,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/auth.context';
+import { CanvasQueryProvider } from './context/canvas-query.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
+        <CanvasQueryProvider>
           <App />
+        </CanvasQueryProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
