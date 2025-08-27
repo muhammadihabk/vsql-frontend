@@ -1,6 +1,8 @@
 @import '../../styles/index.scss';
 
 .query-wrapper {
+  margin-block-start: 2rem;
+
   form {
     display: flex;
     flex-direction: column;
@@ -11,11 +13,10 @@
     padding: 0;
 
     textarea {
-      block-size: 20rem;
+      min-block-size: 20rem;
     }
 
     .btn-schema-query {
-      align-self: end;
       margin-block-start: 1rem;
     }
   }

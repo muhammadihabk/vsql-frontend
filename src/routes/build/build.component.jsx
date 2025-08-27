@@ -40,12 +40,8 @@ function Build() {
       </section>
 
       <section className="builder-panel" aria-labelledby="builder-title">
-        <h2 id="builder-title" className="h2-">
-          Query Builder
-        </h2>
-
         <Canvas tables={tables} />
-        <QueryResult />
+        {/* <QueryResult /> */}
       </section>
     </main>
   );

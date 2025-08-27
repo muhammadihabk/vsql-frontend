@@ -1,12 +1,12 @@
 @import '../../styles/index.scss';
 
 .builder-canvas-wrapper {
-  max-inline-size: 90%;
-  min-block-size: 100%;
-  border: 2px dashed $color-bg-500;
-  border-radius: $border-radius-300;
   background-color: #f1f1f15d;
-  
+
+  flex: 1;
+  background-color: #f8f9fa;
+  position: relative;
+
   overflow: hidden;
 
   &-is-dragging {
