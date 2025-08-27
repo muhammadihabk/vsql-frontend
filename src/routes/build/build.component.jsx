@@ -1,4 +1,4 @@
-import BuilderCanvas from '../../components/BuilderCanvas/builder-canvas.component';
+import Canvas from '../../components/Canvas/canvas.component';
 import SchemaTables from '../../components/SchemaTables/schema-tables.component';
 import QueryResult from '../../components/QueryResult/query-result.component';
 import SchemaQuery from '../../components/SchemaQuery/schema-query.component';
@@ -44,7 +44,7 @@ function Build() {
           Query Builder
         </h2>
 
-        <BuilderCanvas tables={tables} />
+        <Canvas tables={tables} />
         <QueryResult />
       </section>
     </main>

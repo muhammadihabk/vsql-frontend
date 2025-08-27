@@ -2,7 +2,7 @@ import './schema-table-item.styles.scss';
 
 const DBTableItem = ({ tableName }) => {
   function handleDragStart(e, tableName) {
-    e.dataTransfer.setData('tableNameee', tableName);
+    e.dataTransfer.setData('tableName', tableName);
   }
 
   return (
