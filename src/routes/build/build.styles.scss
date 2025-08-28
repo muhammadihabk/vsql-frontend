@@ -5,8 +5,9 @@
     display: flex;
   }
   .schema-panel {
-    min-width: 25rem;
+    min-inline-size: 25rem;
     border-inline-end: $border;
+    margin-block-start: 1rem;
   }
   .builder-panel {
     display: flex;

@@ -32,9 +32,6 @@ function Build() {
   return (
     <main className="build-wrapper">
       <section className="schema-panel" aria-labelledby="schema-title">
-        <h2 id="schema-title" className="h2-">
-          Database Schema
-        </h2>
         <SchemaTables tables={tableIds} />
         <SchemaQuery />
       </section>
