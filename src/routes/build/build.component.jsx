@@ -41,7 +41,7 @@ function Build() {
 
       <section className="builder-panel" aria-labelledby="builder-title">
         <Canvas tables={tables} />
-        {/* <QueryResult /> */}
+        <QueryResult />
       </section>
     </main>
   );

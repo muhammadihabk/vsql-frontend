@@ -7,7 +7,6 @@ import { CanvasQueryContext } from '../../context/canvas-query.context';
 
 const Canvas = (props) => {
   const { tables } = props;
-  const [isDragging, setIsDragging] = useState(false);
   const [canvasTables, setCanvasTables] = useState({});
   const wrapperRef = useRef(null);
   const [dimensions, setDimensions] = useState({
@@ -33,11 +32,9 @@ const Canvas = (props) => {
 
   function handleDragOver(e) {
     e.preventDefault();
-    setIsDragging(true);
   }
 
   function handleDragLeave() {
-    setIsDragging(false);
   }
 
   function handleDrop(e) {
@@ -100,9 +97,7 @@ const Canvas = (props) => {
   return (
     <div
       ref={wrapperRef}
-      className={`${'builder-canvas-wrapper'} ${
-        isDragging ? 'builder-canvas-wrapper-is-dragging' : ''
-      }`}
+      className="builder-canvas-wrapper"
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}

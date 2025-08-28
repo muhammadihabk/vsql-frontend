@@ -13,6 +13,7 @@ function CanvasQueryProvider(props) {
       alert('No query to run');
       return;
     }
+
     const payload = {
       query,
       options: {
@@ -29,7 +30,7 @@ function CanvasQueryProvider(props) {
         }
       );
 
-      setQueryResult(response.data);
+      setQueryResult(response.data.response);
     } catch (error) {
       alert('Error running query');
       console.log(error);
@@ -39,6 +40,7 @@ function CanvasQueryProvider(props) {
   const value = {
     setQuery,
     runQuery,
+    queryResult,
   };
 
   return (

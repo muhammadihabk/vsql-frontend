@@ -1,15 +1,8 @@
 @import '../../styles/index.scss';
 
 .builder-canvas-wrapper {
-  background-color: #f1f1f15d;
-
-  flex: 1;
-  background-color: #f8f9fa;
-  position: relative;
-
+  flex-grow: 1;
   overflow: hidden;
-
-  &-is-dragging {
-    border-color: $accent;
-  }
+  border-block-end: $border;
+  background-color: #f8f9fa;
 }
