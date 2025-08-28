@@ -20,6 +20,80 @@ const Canvas = (props) => {
     },
   });
   const { setQuery } = useContext(CanvasQueryContext);
+  const relationObject = {
+    addRelation(relationships, columns, options) {
+      const foundRelation =
+        tables[options.tableName].relationships?.[options.column];
+
+      if (foundRelation?.length) {
+        columns.push(`${foundRelation[0]}.${foundRelation[1]}`);
+        relationships[options.tableName] = {
+          ...relationships[options.tableName],
+          [foundRelation[0]]: {
+            columns: [options.column, foundRelation[1]],
+          },
+        };
+      }
+
+      return {
+        foundRelation,
+      };
+    },
+    removeRelation(relationships, columns, options) {
+      const foundRelation =
+        tables[options.tableName].relationships?.[options.column];
+      if (foundRelation?.length) {
+        delete relationships[options.tableName][foundRelation[0]];
+        const colName = `${foundRelation[0]}.${foundRelation[1]}`;
+        columns = columns.filter((col) => col !== colName);
+      }
+
+      return {
+        foundRelation,
+        columns,
+      };
+    },
+  };
+  const relationProxy = new Proxy(relationObject, {
+    get(target, prop, _) {
+      const originalValue = target[prop];
+
+      if (typeof originalValue !== 'function') {
+        return originalValue;
+      }
+
+      return function (...args) {
+        const result = originalValue.apply(this, args);
+
+        if (!result.foundRelation?.length) {
+          return result;
+        }
+        if (prop === 'addRelation') {
+          setCanvasTables((pv) => {
+            const newTable = {
+              ...tables[result.foundRelation[0]],
+              activeColumn: result.foundRelation[1],
+            };
+
+            return {
+              ...pv,
+              [result.foundRelation[0]]: newTable,
+            };
+          });
+        } else if (prop === 'removeRelation') {
+          setCanvasTables((prev) => ({
+            ...prev,
+            [result.foundRelation[0]]: {
+              ...prev[result.foundRelation[0]],
+              activeColumn: null,
+            },
+          }));
+        }
+
+        return result;
+      };
+    },
+  });
 
   useEffect(() => {
     if (wrapperRef.current?.offsetHeight && wrapperRef.current?.offsetWidth) {
@@ -34,8 +108,7 @@ const Canvas = (props) => {
     e.preventDefault();
   }
 
-  function handleDragLeave() {
-  }
+  function handleDragLeave() {}
 
   function handleDrop(e) {
     handleDragLeave();
@@ -51,10 +124,14 @@ const Canvas = (props) => {
 
     if (options.isColAdded) {
       columns.push(colName);
-      addRelation(relationships, columns, options);
+      relationProxy.addRelation(relationships, columns, options);
     } else {
       columns = columns.filter((col) => col !== colName);
-      columns = removeRelation(relationships, columns, options);
+      columns = relationProxy.removeRelation(
+        relationships,
+        columns,
+        options
+      ).columns;
     }
 
     const query = {
@@ -65,33 +142,6 @@ const Canvas = (props) => {
     };
     setPrepCanvasQuery(query);
     setQuery(query);
-  }
-
-  function addRelation(relationships, columns, options) {
-    const foundRelation =
-      tables[options.tableName].relationships?.[options.column];
-
-    if (foundRelation?.length) {
-      columns.push(`${foundRelation[0]}.${foundRelation[1]}`);
-      relationships[options.tableName] = {
-        ...relationships[options.tableName],
-        [foundRelation[0]]: {
-          columns: [options.column, foundRelation[1]],
-        },
-      };
-    }
-  }
-
-  function removeRelation(relationships, columns, options) {
-    const foundRelation =
-      tables[options.tableName].relationships?.[options.column];
-    if (foundRelation?.length) {
-      delete relationships[options.tableName][foundRelation[0]];
-      const colName = `${foundRelation[0]}.${foundRelation[1]}`;
-      columns = columns.filter((col) => col !== colName);
-    }
-
-    return columns;
   }
 
   return (

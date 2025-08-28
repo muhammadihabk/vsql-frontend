@@ -1,9 +1,17 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Group, Line, Rect, Text } from 'react-konva';
 
 function CanvasTable(props) {
   let { table, x = 0, y = 0, rowHeight = 35, handleRowClick } = props;
-  const [activeRowsIndexes, setActiveRowsIndexes] = useState(null);
+  const [activeRowsIndexes, setActiveRowsIndexes] = useState(
+    new Set(table.activeColumn ? [table.activeColumn] : null)
+  );
+
+  useEffect(() => {
+    setActiveRowsIndexes(
+      new Set(table.activeColumn ? [table.activeColumn] : [])
+    );
+  }, [table.activeColumn]);
 
   const styles = {
     accent: '#6ed084',
@@ -74,18 +82,19 @@ function CanvasTable(props) {
           width={tableWidth}
           height={rowHeight}
           cornerRadius={styles.cornerRadius}
+          fill={activeRowsIndexes.has(column) ? '#e2e5e87d' : ''}
           onMouseEnter={(e) => {
             e.target.getStage().container().style.cursor = 'pointer';
-            if (activeRowsIndexes?.has(i)) return;
+            if (activeRowsIndexes?.has(column)) return;
             e.target.fill('#f1f5f97d');
           }}
           onMouseLeave={(e) => {
-            if (activeRowsIndexes?.has(i)) return;
+            if (activeRowsIndexes?.has(column)) return;
             e.target.fill('transparent');
             e.target.getStage().container().style.cursor = 'default';
           }}
           onClick={(e) => {
-            const isColAdded = toggleActivateRow(i, e);
+            const isColAdded = toggleActivateRow(column, e);
             const options = {
               isColAdded,
               column,
@@ -111,24 +120,24 @@ function CanvasTable(props) {
     )),
   };
 
-  function updateActiveRowsIndexes(index) {
+  function updateActiveRowsIndexes(column) {
     if (activeRowsIndexes) {
-      if (activeRowsIndexes.has(index)) {
-        activeRowsIndexes.delete(index);
+      if (activeRowsIndexes.has(column)) {
+        activeRowsIndexes.delete(column);
         return false;
       }
       setActiveRowsIndexes(
-        (prevState) => new Set([index, ...prevState?.values()])
+        (prevState) => new Set([column, ...prevState?.values()])
       );
     } else {
-      setActiveRowsIndexes(new Set([index]));
+      setActiveRowsIndexes(new Set([column]));
     }
 
     return true;
   }
 
-  function toggleActivateRow(i, e) {
-    const isUpdated = updateActiveRowsIndexes(i);
+  function toggleActivateRow(column, e) {
+    const isUpdated = updateActiveRowsIndexes(column);
     if (isUpdated) {
       e.target.fill('#e2e5e87d');
     } else {
