@@ -3,36 +3,21 @@ import SchemaTables from '../../components/SchemaTables/schema-tables.component'
 import QueryResult from '../../components/QueryResult/query-result.component';
 import SchemaQuery from '../../components/SchemaQuery/schema-query.component';
 import './build.styles.scss';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { SchemaTablesContext } from '../../context/schema-tables.context';
+import Spinner from '../../components/spinner/spinner.component';
 
 function Build() {
-  const inTables = {
-    customer: {
-      isDropped: false,
-      columns: ['address', 'id', 'name'],
-    },
-    order_: {
-      isDropped: false,
-      columns: ['amount', 'customer_id', 'order_date', 'order_no', 'store_id'],
-      relationships: {
-        customer_id: ['customer', 'id'],
-        store_id: ['store', 'id'],
-      },
-    },
-    store: {
-      isDropped: false,
-      columns: ['city', 'id'],
-    },
-  };
-  const [tables, setTables] = useState(inTables);
-  const tableIds = Object.keys(tables).filter(
-    (table) => !tables[table].isDropped
-  );
+  const { tables } = useContext(SchemaTablesContext);
+  if (!tables) {
+    return <Spinner />;
+  }
+  const tablesNames = Object.keys(tables);
 
   return (
     <main className="build-wrapper">
       <section className="schema-panel" aria-labelledby="schema-title">
-        <SchemaTables tables={tableIds} />
+        <SchemaTables tablesNames={tablesNames} />
         <SchemaQuery />
       </section>
 

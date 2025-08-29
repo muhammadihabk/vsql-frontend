@@ -2,12 +2,12 @@ import './schema-tables.styles.scss';
 import SchemaTableItem from '../SchemaTableItem/schema-table-item.component';
 
 const DBTables = (props) => {
-  const { tables } = props;
+  const { tablesNames } = props;
 
   return (
     <div className="tables-wrapper" aria-label="Database tables">
       <ul>
-        {tables.map((tableName) => (
+        {tablesNames.map((tableName) => (
           <SchemaTableItem key={tableName} tableName={tableName} />
         ))}
       </ul>
