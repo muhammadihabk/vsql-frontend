@@ -5,13 +5,6 @@ import { Layer, Stage } from 'react-konva';
 import CanvasTable from '../CanvasTable/canvas-table.component';
 import { CanvasQueryContext } from '../../context/canvas-query.context';
 
-const tempQuery = {
-  query: {
-    columns: [],
-    relationships: {},
-  },
-};
-
 const Canvas = (props) => {
   const { tables } = props;
   const [canvasTables, setCanvasTables] = useState({});
@@ -19,6 +12,10 @@ const Canvas = (props) => {
   const [dimensions, setDimensions] = useState({
     width: 0,
     height: 0,
+  });
+  const tempQuery = useRef({
+    columns: [],
+    relationships: {},
   });
   const { setQuery } = useContext(CanvasQueryContext);
   const relationObject = {
@@ -122,30 +119,24 @@ const Canvas = (props) => {
     const colName = `${options.tableName}.${options.column}`;
 
     if (options.isColAdded) {
-      tempQuery.query.columns.push(colName);
+      tempQuery.current.columns.push(colName);
       relationProxy.addRelation(
-        tempQuery.query.relationships,
-        tempQuery.query.columns,
+        tempQuery.current.relationships,
+        tempQuery.current.columns,
         options
       );
     } else {
-      tempQuery.query.columns = tempQuery.query.columns.filter(
+      tempQuery.current.columns = tempQuery.current.columns.filter(
         (col) => col !== colName
       );
-      tempQuery.query.columns = relationProxy.removeRelation(
-        tempQuery.query.relationships,
-        tempQuery.query.columns,
+      tempQuery.current.columns = relationProxy.removeRelation(
+        tempQuery.current.relationships,
+        tempQuery.current.columns,
         options
       ).columns;
     }
 
-    const query = {
-      query: {
-        columns: tempQuery.query.columns,
-        relationships: tempQuery.query.relationships,
-      },
-    };
-    setQuery(query);
+    setQuery(tempQuery.current);
   }
 
   return (

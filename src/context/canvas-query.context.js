@@ -15,7 +15,9 @@ function CanvasQueryProvider(props) {
     }
 
     const payload = {
-      query,
+      query: {
+        definition: query,
+      },
       options: {
         database: 'MySQL',
       },
