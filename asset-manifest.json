@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/vsql-frontend/static/css/main.b70fee9c.css",
-    "main.js": "/vsql-frontend/static/js/main.001978ae.js",
+    "main.js": "/vsql-frontend/static/js/main.30e3c5b9.js",
     "static/js/453.f2edd47e.chunk.js": "/vsql-frontend/static/js/453.f2edd47e.chunk.js",
     "index.html": "/vsql-frontend/index.html",
     "main.b70fee9c.css.map": "/vsql-frontend/static/css/main.b70fee9c.css.map",
-    "main.001978ae.js.map": "/vsql-frontend/static/js/main.001978ae.js.map",
+    "main.30e3c5b9.js.map": "/vsql-frontend/static/js/main.30e3c5b9.js.map",
     "453.f2edd47e.chunk.js.map": "/vsql-frontend/static/js/453.f2edd47e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b70fee9c.css",
-    "static/js/main.001978ae.js"
+    "static/js/main.30e3c5b9.js"
   ]
 }
