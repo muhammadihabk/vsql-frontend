@@ -7,32 +7,33 @@ function SchemaTablesProvider(props) {
   const { children } = props;
   const [tables, setTables] = useState(null);
 
-  useEffect(() => {
-    async function fetch() {
-      try {
-        const response = await axios.post(
-          `${process.env.REACT_APP_BACKEND_BASE_URL}/db/get-tables-details`,
-          {
-            options: {
-              database: 'MySQL',
-            },
+  async function fetchTables() {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/db/get-tables-details`,
+        {
+          options: {
+            database: 'MySQL',
           },
-          {
-            withCredentials: true,
-          }
-        );
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
-        setTables(response.data.tables);
-      } catch (error) {
-        console.log(error);
-      }
+      setTables(response.data.tables);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    fetch();
+  useEffect(() => {
+    fetchTables();
   }, []);
 
   const value = {
-    tables
+    tables,
+    refetch: fetchTables,
   };
 
   return (

@@ -5,12 +5,21 @@ const DBTables = (props) => {
   const { tablesNames } = props;
 
   return (
-    <div className="tables-wrapper" aria-label="Database tables">
-      <ul>
-        {tablesNames.map((tableName) => (
-          <SchemaTableItem key={tableName} tableName={tableName} />
-        ))}
-      </ul>
+    <div
+      className={`tables-wrapper ${
+        !tablesNames.length ? 'no-results-container' : ''
+      }`}
+      aria-label="Database tables"
+    >
+      {tablesNames.length ? (
+        <ul>
+          {tablesNames.map((tableName) => (
+            <SchemaTableItem key={tableName} tableName={tableName} />
+          ))}
+        </ul>
+      ) : (
+        <div className="no-results">No tables to display</div>
+      )}
     </div>
   );
 };

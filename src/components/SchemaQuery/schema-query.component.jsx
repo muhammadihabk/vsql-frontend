@@ -1,11 +1,48 @@
+import { useContext, useState } from 'react';
 import Button from '../button/button.component';
 import './schema-query.styles.scss';
+import axios from 'axios';
+import { SchemaTablesContext } from '../../context/schema-tables.context';
 
 const SchemaQuery = () => {
+  const [query, setQuery] = useState('');
+  const { refetch } = useContext(SchemaTablesContext);
+
+  function handleChange(e) {
+    setQuery(e.target.value);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!query) return;
+
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_BASE_URL}/db/build-schema`,
+        {
+          query: query,
+          options: {
+            database: 'MySQL',
+          },
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      refetch();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className="query-wrapper" aria-label="Schema query">
-      <form>
-        <textarea placeholder="CREATE TABLE, INSERT, ..."></textarea>
+      <form onSubmit={handleSubmit}>
+        <textarea
+          placeholder="CREATE TABLE, INSERT, ..."
+          value={query}
+          onChange={handleChange}
+        ></textarea>
         <Button
           inType="submit"
           text="Generate Schema"
