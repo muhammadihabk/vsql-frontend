@@ -2,7 +2,15 @@ import { Fragment, useEffect, useState } from 'react';
 import { Group, Line, Rect, Text } from 'react-konva';
 
 function CanvasTable(props) {
-  let { table, x = 0, y = 0, rowHeight = 35, handleRowClick } = props;
+  let {
+    table,
+    x = 0,
+    y = 0,
+    rowHeight = 35,
+    handleRowClick,
+    onDragEnd,
+    name,
+  } = props;
   const [activeRowsIndexes, setActiveRowsIndexes] = useState(
     new Set(table.activeColumn ? [table.activeColumn] : null)
   );
@@ -25,8 +33,8 @@ function CanvasTable(props) {
   const shapes = {
     wrapper: (
       <Rect
-        x={x}
-        y={y}
+        x={0}
+        y={0}
         width={tableWidth}
         height={table.columns.length * rowHeight + headerHeight + 7}
         fill="#ffffff"
@@ -38,8 +46,8 @@ function CanvasTable(props) {
     ),
     accentLine: (
       <Rect
-        x={x}
-        y={y}
+        x={0}
+        y={0}
         width={tableWidth}
         height={7}
         fill={styles.accent}
@@ -49,20 +57,20 @@ function CanvasTable(props) {
     header: (
       <>
         <Rect
-          x={x}
-          y={y + 7}
+          x={0}
+          y={7}
           width={tableWidth}
           height={rowHeight}
           fill={styles.bg}
         />
         <Line
-          points={[x, y + 7 + rowHeight, x + tableWidth, y + 7 + rowHeight]}
+          points={[0, 7 + rowHeight, tableWidth, 7 + rowHeight]}
           stroke="#e0e9ef"
           strokeWidth={2}
         />
         <Text
-          x={x}
-          y={y + 7}
+          x={0}
+          y={7}
           text={table.name}
           width={tableWidth}
           height={rowHeight}
@@ -77,8 +85,8 @@ function CanvasTable(props) {
     rows: table.columns.map((column, i) => (
       <Fragment key={column}>
         <Rect
-          x={x}
-          y={y + 7 + rowHeight * (i + 1)}
+          x={0}
+          y={7 + rowHeight * (i + 1)}
           width={tableWidth}
           height={rowHeight}
           cornerRadius={styles.cornerRadius}
@@ -104,8 +112,8 @@ function CanvasTable(props) {
           }}
         />
         <Text
-          x={x}
-          y={y + 7 + rowHeight * (i + 1)}
+          x={0}
+          y={7 + rowHeight * (i + 1)}
           text={column}
           width={tableWidth}
           height={rowHeight}
@@ -148,7 +156,7 @@ function CanvasTable(props) {
   }
 
   return (
-    <Group x={x} y={y} draggable>
+    <Group x={x} y={y} draggable onDragEnd={(e) => onDragEnd(e, name)}>
       {shapes.wrapper}
       {shapes.accentLine}
       {shapes.header}

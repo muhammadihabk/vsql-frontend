@@ -9,6 +9,7 @@ const Canvas = (props) => {
   const { tables } = props;
   const [canvasTables, setCanvasTables] = useState({});
   const wrapperRef = useRef(null);
+  const stageRef = useRef(null);
   const [dimensions, setDimensions] = useState({
     width: 0,
     height: 0,
@@ -106,13 +107,22 @@ const Canvas = (props) => {
     e.preventDefault();
   }
 
-  function handleDragLeave() {}
-
   function handleDrop(e) {
-    handleDragLeave();
+    e.preventDefault();
     const tableName = e.dataTransfer.getData('tableName');
     const table = tables[tableName];
-    setCanvasTables((pv) => ({ ...pv, [tableName]: table }));
+
+    const stage = stageRef.current;
+    if (!stage) return;
+
+    const stageBox = stage.container().getBoundingClientRect();
+    const x = e.clientX - stageBox.left;
+    const y = e.clientY - stageBox.top;
+
+    setCanvasTables((prev) => ({
+      ...prev,
+      [tableName]: { ...table, x, y, name: tableName },
+    }));
   }
 
   function handleRowClick(options) {
@@ -139,34 +149,35 @@ const Canvas = (props) => {
     setQuery(tempQuery.current);
   }
 
+  function handleTableDragEnd(e, tableName) {
+    const newX = e.target.x();
+    const newY = e.target.y();
+    setCanvasTables((prev) => ({
+      ...prev,
+      [tableName]: { ...prev[tableName], x: newX, y: newY },
+    }));
+  }
+
   return (
     <div
       ref={wrapperRef}
       className="builder-canvas-wrapper"
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
+      onDragOver={(e) => e.preventDefault()}
       onDrop={handleDrop}
     >
-      <Stage width={dimensions.width} height={dimensions.height}>
+      <Stage ref={stageRef} width={dimensions.width} height={dimensions.height}>
         <Layer>
-          {Object.entries(canvasTables).map(([tableName, value], i) => {
-            const GRID_SIZE = 150;
-            const ROW_HEIGHT = 35;
-            const col = i % 3; // 3 tables per row
-            const row = Math.floor(i / 3);
-            const x = col * GRID_SIZE + 50;
-            const y = row * value.columns.length * ROW_HEIGHT + 50; // Adjust based on table height
-
-            value.name = tableName;
-
+          {Object.entries(canvasTables).map(([tableName, tableData]) => {
             return (
               <CanvasTable
                 key={tableName}
-                x={x}
-                y={y}
-                rowHeight={ROW_HEIGHT}
-                table={value}
+                name={tableName}
+                x={tableData.x}
+                y={tableData.y}
+                rowHeight={35}
+                table={tableData}
                 handleRowClick={handleRowClick}
+                onDragEnd={handleTableDragEnd}
               />
             );
           })}
